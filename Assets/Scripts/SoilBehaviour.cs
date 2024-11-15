@@ -7,7 +7,6 @@ public class SoilBehaviour : MonoBehaviour
     private void OnMouseDown() {
         if(!PlayerView.isMoving)
             this.SetAsTarget();
-        Debug.Log(PlayerView.isMoving);
     }
 
     public void SetAsTarget() {
