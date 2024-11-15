@@ -35,10 +35,19 @@ public class PathFindingAStar : MonoBehaviour
     [Header("Time")]
     [SerializeField] float timeFind;
     #endregion
+
+    private void ClearOldData() {
+        this.frontierNodes.Clear();
+        this.exploredNodes.Clear();
+        this.resultPath.Clear();
+        GridMapController.Instance.ResetPrevNode();
+    }
     
     //Hàm public Player sẽ gọi để có danh sách Đường đi
     public List<Node> PlayerGetPath(Node startNode, Node endNode)
     {
+        this.ClearOldData();
+
         this.player = startNode;
         this.target = endNode;
 
@@ -163,15 +172,12 @@ public class PathFindingAStar : MonoBehaviour
         }
         return false;
     }
-    private void BuildPath(Node endNode)
-    {
+    private void BuildPath(Node endNode) {
         resultPath.Clear();
         Node current = endNode;
 
-        while (current != null)
-        {
-            if (!current.isObstacle)
-            {
+        while (current != null) {
+            if (!current.isObstacle) {
                 resultPath.Add(current);
             }
             current = current.prevNode;
