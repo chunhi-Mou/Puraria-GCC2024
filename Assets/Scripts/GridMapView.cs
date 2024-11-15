@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridMapView : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField] int sortingScale = 10;
     public void ClearOldPrefabs()
     {
         for (int i = transform.childCount - 1; i >= 0; i--)
@@ -25,7 +25,7 @@ public class GridMapView : MonoBehaviour
             Renderer renderer = tile.GetComponentInChildren<SpriteRenderer>();
             if (renderer != null)
             {
-                renderer.sortingOrder = -(int)(y * 10) + x;
+                renderer.sortingOrder = -(int)(y * sortingScale) + x;
             }
             return node;
         }
