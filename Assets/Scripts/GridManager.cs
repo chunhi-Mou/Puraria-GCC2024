@@ -6,8 +6,7 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] private int width, height;
     [SerializeField] private Tile grassTiles, badLandTiles, _tilePrefab;
-    [SerializeField] private Transform _cam;
-    [SerializeField] private Transform _player;
+    
     public float xSpacing = 1.0f; // Khoảng cách ngang giữa các prefab
     public float ySpacing = 0.866f; // Khoảng cách dọc giữa các prefab (0.866 = khoảng cách cho hình lục giác đều)
     private Dictionary<Vector2, Tile> _tile;
@@ -34,8 +33,8 @@ public class GridManager : MonoBehaviour
                 _tile.Add(new Vector2(x, y), spawned);
             }
         }
-        _cam.transform.position = new Vector3(width / 2, height / 4, -10);
-        _player.transform.position = new Vector3(width / 2 - 4, height / 4, 0);
+        //_cam.transform.position = new Vector3(width / 2, height / 4, -10);
+        //_player.transform.position = new Vector3(width / 2 - 4, height / 4, 0);
     }
      
     public Tile GetTile(Vector2 position)

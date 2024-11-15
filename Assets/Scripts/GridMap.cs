@@ -6,14 +6,14 @@ public class GridMap : MonoBehaviour
 {
 
     public GameObject tilePrefab;
-    private const float TILE_HORIZONTAL = 10;
+    private const float TILE_HORIZONTAL = 2;
 
     private const float TILE_VERTICAL = 1.1f;
 
     private const float TILE_EDGE = 1f;
 
-    private float _disHori = TILE_HORIZONTAL / 2;
-    private float _disVert = (TILE_VERTICAL + TILE_EDGE) / 2;
+    //private float _disHori = TILE_HORIZONTAL / 2;
+    //private float _disVert = (TILE_VERTICAL + TILE_EDGE) / 2;
 
     Vector2 disTileHori = new Vector2(TILE_HORIZONTAL + TILE_EDGE, 0);
 
