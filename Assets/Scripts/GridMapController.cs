@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridMapController : MonoBehaviour
@@ -32,7 +33,7 @@ public class GridMapController : MonoBehaviour
     [Header("Soil Prefab")]
     [SerializeField] GameObject prefab;
 
-    private static Node[,] nodes;
+    public Node[,] nodes;
 
     public void GenerateMap()
     {
@@ -82,6 +83,14 @@ public class GridMapController : MonoBehaviour
                     nodes[x, y].neighbors.Add(nodes[curX, curY]);
                 }
             }
+        }
+    }
+    //Hàm public được gọi trước mỗi lần tìm đường mới: Reset hết prevNode của các Node về null
+    public void ResetPrevNode() {
+        foreach (Transform child in transform) {
+            Debug.Log(child.name);
+            Node nodeOfChild = child.GetComponent<Node>();
+            nodeOfChild.prevNode = null;
         }
     }
 }
