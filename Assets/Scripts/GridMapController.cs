@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridMapController : MonoBehaviour
@@ -88,7 +87,6 @@ public class GridMapController : MonoBehaviour
     //Hàm public được gọi trước mỗi lần tìm đường mới: Reset hết prevNode của các Node về null
     public void ResetPrevNode() {
         foreach (Transform child in transform) {
-            Debug.Log(child.name);
             Node nodeOfChild = child.GetComponent<Node>();
             nodeOfChild.prevNode = null;
         }
