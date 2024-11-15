@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 enum SoilType
 {
     Good, //Đất tốt
@@ -27,6 +26,6 @@ public class Node : MonoBehaviour
     public float hCost;
     public float FCost => gCost + hCost;
 
-    public Node prevNode;
+    public Node prevNode = null;
     public List<Node> neighbors = new List<Node>();
 }
