@@ -22,12 +22,10 @@ public class PlayerView : MonoBehaviour {
     public static bool isMoving = false;
     public static Node currNode = null;
 
-    public bool PlayerMovementView(List<Node> path) {
-        if (!isMoving) {
+    public void PlayerMovementView(List<Node> path) {
+        if (!isMoving)
             StartCoroutine(MoveAlongPath(path));
-            return false;
-        }
-        return true;
+        else Debug.Log("Cant change target while moving ._.");
     }
 
     private IEnumerator MoveAlongPath(List<Node> path) {
