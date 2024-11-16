@@ -79,7 +79,6 @@ public class GridMapController : MonoBehaviour {
     }
     //Hàm public được gọi trước mỗi lần tìm đường mới: Reset hết prevNode của các Node về null
     public void ResetPrevNode() {
-        Debug.Log(nodes == null);
         for (int y = 0; y <= ySize; y++) {
             for (int x = 0; x <= xSize; x++) {
                 nodes[x, y].prevNode = null;
