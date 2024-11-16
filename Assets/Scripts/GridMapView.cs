@@ -20,6 +20,7 @@ public class GridMapView : MonoBehaviour
 
             tile.name = "Đất" + "(" + x + ", " + y + ")";
             Node node = tile.GetComponent<Node>();
+            node.x = x; node.y = y;
 
              // Tính toán sortingOrder: Ưu tiên x lớn hơn và nếu x bằng nhau thì y nhỏ hơn
             Renderer renderer = tile.GetComponentInChildren<SpriteRenderer>();
