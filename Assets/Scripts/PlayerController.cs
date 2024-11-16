@@ -23,7 +23,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] GameObject startSoil;
     //Hàm khởi tạo vị trí ban đầu và hiện tại
     private void SetUpStartStatus() {
-        startNode = startSoil.GetComponent<Node>();
+        if (startSoil != null)
+            startNode = startSoil.GetComponent<Node>();
+        else
+            Debug.LogWarning("Not found startSoil");
         PlayerView.currNode = startNode;
     }
     //Hàm public được 1 ô Đất gọi khi được click để Gọi hàm tìm đường
