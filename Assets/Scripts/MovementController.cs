@@ -19,21 +19,14 @@ public class MovementController : MonoBehaviour {
     }
     #endregion
 
-    //private List<Node> playerPath = new List<Node>();
-    //private Node startNode = null;
-
     private Node goalNode;
-    // private Units _spawnedPlayer, _spawnedGoal;
-    public Rigidbody2D rb;
+
+    public Rigidbody2D Ridgi;
 
     [SerializeField] float _moveSpeed = 100f;
     public static bool isMoving = false;
     public static Node currNode = null;
 
-    // public void SetUpPath(List<Node> path)
-    // {
-    //     playerPath = path;
-    // }
     private IEnumerator MoveAlongPath(List<Node> path) {
         isMoving = true;
 
@@ -41,8 +34,8 @@ public class MovementController : MonoBehaviour {
             currNode = node;
             Vector2 targetPosition = node.transform.position;
             while (Vector2.Distance(transform.position, targetPosition) > 0.1f) {
-                Vector2 newPosition = Vector2.MoveTowards(rb.transform.position, targetPosition, _moveSpeed * Time.deltaTime);
-                rb.MovePosition(newPosition);
+                Vector2 newPosition = Vector2.MoveTowards(Ridgi.transform.position, targetPosition, _moveSpeed * Time.deltaTime);
+                Ridgi.MovePosition(newPosition);
                 yield return null;
             }
         }
@@ -54,8 +47,8 @@ public class MovementController : MonoBehaviour {
         return !isMoving;
     }
     private void SetupRigidBody() {
-        rb = GetComponentInParent<Rigidbody2D>();
-        rb.position = currNode.transform.position;
+        Ridgi = GetComponentInParent<Rigidbody2D>();
+        Ridgi.position = currNode.transform.position;
     }
 
     public void SetUpStart(Node node)

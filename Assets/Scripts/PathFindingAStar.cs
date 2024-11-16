@@ -34,10 +34,7 @@ public class PathFindingAStar : MonoBehaviour
     public Units unit;
     
     private void ClearOldData() {
-        // foreach (var t in resultPath)
-        // {
-        //     t.removeHighlight();
-        // }
+
         this.frontierNodes.Clear();
         this.exploredNodes.Clear();
         this.resultPath.Clear();
