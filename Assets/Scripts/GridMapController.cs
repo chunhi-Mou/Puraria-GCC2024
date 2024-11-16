@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
 public class GridMapController : MonoBehaviour
 {
@@ -32,8 +34,44 @@ public class GridMapController : MonoBehaviour
     [Header("Soil Prefab")]
     [SerializeField] GameObject prefab;
 
-    private static Node[,] nodes;
+    [Header("other informations")] // them vao
 
+    [SerializeField] private Sprite _playerSprite;
+    [SerializeField] private Sprite _goalSprite;
+    [SerializeField] private Units _unitPrefab;
+
+    private Node _playerNode, _goalNode;
+    private Units _spawnedPlayer, _spawnedGoal;
+
+    private static Node[,] nodes;
+    void Start() {
+        GenerateMap();
+        SpawnUnits();
+        Node.OnHoverTile += OnTileHover;
+    }
+
+    private void OnDestroy() => Node.OnHoverTile -= OnTileHover;
+
+    // ham xac dinh vi tri click chuot
+    private void OnTileHover(Node nodeBase) {
+        _goalNode = nodeBase;
+        _spawnedGoal.transform.position = _goalNode.transform.position;
+
+        foreach (var t in nodes) t.removeHighlight();
+        
+        var mc = new PathFindingAStar();
+        var path = mc.PlayerGetPath(_playerNode, _goalNode);
+        //MovementController.Instance.SetUpPath(path);
+        MovementController.Instance.Move(path);
+        
+        _playerNode = _goalNode;
+
+    }
+
+    public void RemoveHighLight(List<Node> path)
+    {
+        foreach (var t in path) t.removeHighlight();
+    }
     public void GenerateMap()
     {
         //Khởi tạo - Xoá prefab cũ
@@ -58,6 +96,7 @@ public class GridMapController : MonoBehaviour
                 Vector2 position = new Vector2(posX, posY);
                 //Tạo Node và Lưu vào Mảng
                 nodes[x, y] = gridMapView.CreateNode(x, y, position, prefab);
+
             }
         }
         UpdateNeighborsNodes();
@@ -84,4 +123,25 @@ public class GridMapController : MonoBehaviour
             }
         }
     }
+
+    public void ClearPrevNode() {
+        foreach (Transform child in transform) {
+            Debug.Log(child.name);
+            Node nodeOfChild = child.GetComponent<Node>();
+            nodeOfChild.prevNode = null;
+        }
+    }
+
+    void SpawnUnits() {
+        _playerNode = nodes[3, 5];
+        MovementController.Instance.SetUpStart(_playerNode);
+        //_spawnedPlayer = Instantiate(_unitPrefab, _playerNode.transform.position, Quaternion.identity);
+        //_spawnedPlayer.Init(_playerSprite);
+
+        _spawnedGoal = Instantiate(_unitPrefab, new Vector3(50, 50, 50), Quaternion.identity);
+        //_spawnedGoal.Init(_goalSprite);
+        _spawnedGoal.Init(null);
+    }
+
+
 }

@@ -12,6 +12,7 @@ public class GridMapEditor : Editor
         if (GUILayout.Button("Generate Map"))
         {
             gridMapController.GenerateMap();
+            
         }
     }
 }

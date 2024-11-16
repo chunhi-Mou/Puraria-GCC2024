@@ -21,6 +21,7 @@ public class GridMapView : MonoBehaviour
             Node node = tile.GetComponent<Node>();
 
             Renderer renderer = tile.GetComponentInChildren<SpriteRenderer>();
+            
             if (renderer != null)
             {
                 renderer.sortingOrder = -(int)(y * 1000) + x;
