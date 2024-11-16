@@ -35,7 +35,7 @@ public class PlayerView : MonoBehaviour {
             currNode = node;
             Vector2 targetPosition = node.transform.position;
             while (Vector2.Distance(transform.position, targetPosition) > 0.1f) {
-                Vector2 newPosition = Vector2.MoveTowards(rb.transform.position, targetPosition, _moveSpeed * Time.deltaTime);
+                Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPosition, _moveSpeed * Time.deltaTime);
                 rb.MovePosition(newPosition);
                 yield return null;
             }
