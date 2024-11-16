@@ -2,24 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridMapController : MonoBehaviour
-{
+public class GridMapController : MonoBehaviour {
     #region Singleton
     public static GridMapController Instance;
-    private void Awake()
-    {
-        if (Instance == null)
-        {
+    private void Awake() {
+        if (Instance == null) {
             Instance = this;
-        }
-        else if (Instance != this)
-        {
+        } else if (Instance != this) {
             Destroy(gameObject);
         }
     }
     #endregion
 
-    [Header("Grid Map Data")]        
+    [Header("Grid Map Data")]
     [SerializeField] int xSize;
     [SerializeField] int ySize;
     [SerializeField] float gap = 0.44f;
@@ -32,15 +27,16 @@ public class GridMapController : MonoBehaviour
     [Header("Soil Prefab")]
     [SerializeField] GameObject prefab;
 
-    private static Node[,] nodes;
+    public static Node[,] nodes;
+    public List<Node> nodesList = new List<Node>();
 
-    public void GenerateMap()
-    {
+    public void GenerateMap() {
         //Khởi tạo - Xoá prefab cũ
         GridMapView gridMapView = GetComponent<GridMapView>();
         gridMapView.ClearOldPrefabs();
         nodes = new Node[xSize + 1, ySize + 1];
-        
+        nodesList.Clear();
+
         //Hình thoi
         float angleRad = angle * Mathf.Deg2Rad;
 
@@ -58,21 +54,18 @@ public class GridMapController : MonoBehaviour
                 Vector2 position = new Vector2(posX, posY);
                 //Tạo Node và Lưu vào Mảng
                 nodes[x, y] = gridMapView.CreateNode(x, y, position, prefab);
+                nodesList.Add(nodes[x, y]);
             }
         }
         UpdateNeighborsNodes();
     }
 
-    private void UpdateNeighborsNodes()
-    {
-        for (int y = 0; y <= ySize; y++)
-        {
-            for (int x = 0; x <= xSize; x++)
-            {
+    private void UpdateNeighborsNodes() {
+        for (int y = 0; y <= ySize; y++) {
+            for (int x = 0; x <= xSize; x++) {
                 nodes[x, y].neighbors = new List<Node>();
 
-                foreach (var dir in Node.directions)
-                {
+                foreach (var dir in Node.directions) {
                     int curX = x + (int)dir.x;
                     int curY = y + (int)dir.y;
 
@@ -81,6 +74,29 @@ public class GridMapController : MonoBehaviour
 
                     nodes[x, y].neighbors.Add(nodes[curX, curY]);
                 }
+            }
+        }
+    }
+    //Hàm public được gọi trước mỗi lần tìm đường mới: Reset hết prevNode của các Node về null
+    public void ResetPrevNode() {
+        Debug.Log(nodes == null);
+        for (int y = 0; y <= ySize; y++) {
+            for (int x = 0; x <= xSize; x++) {
+                nodes[x, y].prevNode = null;
+            }
+        }
+    }
+    //Refill lại mảng bị mất khi Runtime
+    private void Start() {
+        this.RefillNodesArray();
+    }
+    public void RefillNodesArray() {
+        // Tạo lại mảng dựa trên con của GridMapController
+        nodes = new Node[xSize + 1, ySize + 1];
+        foreach (Transform child in transform) {
+            Node node = child.GetComponent<Node>();
+            if (node != null) {
+                nodes[node.x, node.y] = node;
             }
         }
     }
