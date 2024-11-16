@@ -32,7 +32,8 @@ public class GridMapController : MonoBehaviour
     [Header("Soil Prefab")]
     [SerializeField] GameObject prefab;
 
-    public Node[,] nodes;
+    public static Node[,] nodes;
+    public List<Node> nodesList = new List<Node>();
 
     public void GenerateMap()
     {
@@ -40,6 +41,7 @@ public class GridMapController : MonoBehaviour
         GridMapView gridMapView = GetComponent<GridMapView>();
         gridMapView.ClearOldPrefabs();
         nodes = new Node[xSize + 1, ySize + 1];
+        nodesList.Clear();
         
         //Hình thoi
         float angleRad = angle * Mathf.Deg2Rad;
@@ -58,6 +60,7 @@ public class GridMapController : MonoBehaviour
                 Vector2 position = new Vector2(posX, posY);
                 //Tạo Node và Lưu vào Mảng
                 nodes[x, y] = gridMapView.CreateNode(x, y, position, prefab);
+                nodesList.Add(nodes[x, y]);
             }
         }
         UpdateNeighborsNodes();
@@ -86,9 +89,25 @@ public class GridMapController : MonoBehaviour
     }
     //Hàm public được gọi trước mỗi lần tìm đường mới: Reset hết prevNode của các Node về null
     public void ResetPrevNode() {
+        Debug.Log(nodes == null);
+        for (int y = 0; y <= ySize; y++) {
+            for (int x = 0; x <= xSize; x++) {
+                nodes[x, y].prevNode = null;
+            }
+        }
+    }
+    //Refill lại mảng bị mất khi Runtime
+    private void Start() {
+        this.RefillNodesArray();
+    }
+    public void RefillNodesArray() {
+        // Tạo lại mảng dựa trên con của GridMapController
+        nodes = new Node[xSize + 1, ySize + 1];
         foreach (Transform child in transform) {
-            Node nodeOfChild = child.GetComponent<Node>();
-            nodeOfChild.prevNode = null;
+            Node node = child.GetComponent<Node>();
+            if (node != null) {
+                nodes[node.x, node.y] = node;
+            }
         }
     }
 }
