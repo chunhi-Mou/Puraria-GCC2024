@@ -1,37 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    #region Singleton
-    public static PlayerController Instance;
+    public List<Vector2> path = new List<Vector2>();
+    public int  currNode = 0;
+    public float delay =0.5f;
 
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-        } else if (Instance != this) {
-            Destroy(gameObject);
+    void Update(){
+        if(path.Count>0){
+            if(delay>=0.5f){
+                RaycastHit2D hit = Physics2D.Raycast(path[currNode],path[currNode],0,LayerMask.GetMask("Default"));
+                if(hit) MoveTo(hit.collider.gameObject);
+                else{
+                    Debug.Log("No Tile Found");
+                    path = new List<Vector2>();
+                    currNode =0;
+                    delay=0.5f;
+                }
+            }
+            else delay +=Time.deltaTime;
         }
-        this.SetUpStartStatus();
     }
-    #endregion
+    void MoveTo(GameObject hex){
+        transform.position = hex.transform.position;
+        transform.parent = hex.transform;
+        delay=0;
+    }
 
-    private List<Node> playerPath = new List<Node>();
-    private Node startNode = null;
-
-    [SerializeField] GameObject startSoil;
-    //Hàm khởi tạo vị trí ban đầu và hiện tại
-    private void SetUpStartStatus() {
-        if (startSoil != null)
-            startNode = startSoil.GetComponent<Node>();
-        else
-            Debug.LogWarning("Not found startSoil");
-        PlayerView.currNode = startNode;
-    }
-    //Hàm public được 1 ô Đất gọi khi được click để Gọi hàm tìm đường
-    public void ReceiveTargetSoil(Node target) {
-        playerPath = PathFindingAStar.Instance.PlayerGetPath(PlayerView.currNode, target);
-        PlayerView.Instance.PlayerMovementView(playerPath);
-    }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 enum SoilType
 {
@@ -21,13 +22,16 @@ public class Node : MonoBehaviour
     };
 
     public bool isObstacle;
-
+    public int soilType;
     public float gCost;
     public float hCost;
-    public float FCost => gCost + hCost;
-
+    public float FCost;
+    public Vector2 pos; 
     public Node prevNode = null;
     public List<Node> neighbors = new List<Node>();
     //Toạ độ x, y của ô đất
     public int x, y;
+    public Node (Vector2 pos){
+        this.pos=pos;
+    }
 }

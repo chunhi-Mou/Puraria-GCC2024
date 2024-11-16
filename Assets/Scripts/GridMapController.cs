@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridMapController : MonoBehaviour {
@@ -15,8 +17,8 @@ public class GridMapController : MonoBehaviour {
     #endregion
 
     [Header("Grid Map Data")]
-    [SerializeField] int xSize;
-    [SerializeField] int ySize;
+    public  int xSize;
+    public  int ySize;
     [SerializeField] float gap = 0.44f;
 
     [Header("Rhombus Data")]
@@ -99,5 +101,15 @@ public class GridMapController : MonoBehaviour {
                 nodes[node.x, node.y] = node;
             }
         }
+    }
+
+    public Node GetNode(Vector2 pos){
+        pos.y= Mathf.RoundToInt(pos.y/0.86f);
+        if(pos.y %2==0) pos.x-=0.5f;
+        return nodes[(int)pos.x,(int)pos.y];
+    }
+
+    public Node GetNodeInt(int x, int y){
+        return nodes[x,y];
     }
 }
