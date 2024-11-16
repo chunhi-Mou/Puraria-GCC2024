@@ -23,8 +23,8 @@ public class PathFindingAStar : MonoBehaviour
     #region Show A* Algorithm Details
     [Header("List in Gameplay")]
     [SerializeField] List<Node> resultPath = new List<Node>();
-    [SerializeField] List<Node> frontierNodes = new List<Node>();
-    [SerializeField] List<Node> exploredNodes = new List<Node>();
+    private HashSet<Node> frontierNodes = new HashSet<Node>();
+    private HashSet<Node> exploredNodes = new HashSet<Node>();
 
     [Header("Nodes in Gameplay")]
     [SerializeField] Node player;
@@ -112,11 +112,13 @@ public class PathFindingAStar : MonoBehaviour
     {
         if (frontierNodes.Count == 0) return null;
 
-        Node bestNode = frontierNodes[0];
+        Node bestNode = null;
 
         foreach (var node in frontierNodes)
         {
-            if (node.FCost < bestNode.FCost || (node.FCost == bestNode.FCost && node.hCost < bestNode.hCost))
+            if (bestNode == null || 
+                node.FCost < bestNode.FCost || 
+                (node.FCost == bestNode.FCost && node.hCost < bestNode.hCost))
             {
                 bestNode = node;
             }
