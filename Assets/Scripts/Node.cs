@@ -28,4 +28,6 @@ public class Node : MonoBehaviour
 
     public Node prevNode = null;
     public List<Node> neighbors = new List<Node>();
+    //Toạ độ x, y của ô đất
+    public int x, y;
 }
