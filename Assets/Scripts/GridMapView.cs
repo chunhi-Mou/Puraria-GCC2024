@@ -2,30 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridMapView : MonoBehaviour
-{
+public class GridMapView : MonoBehaviour {
     [SerializeField] int sortingScale = 10;
-    public void ClearOldPrefabs()
-    {
-        for (int i = transform.childCount - 1; i >= 0; i--)
-        {
+    public void ClearOldPrefabs() {
+        for (int i = transform.childCount - 1; i >= 0; i--) {
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
     }
-    public Node CreateNode(int x, int y, Vector2 position, GameObject prefab)
-    {
-        if (prefab != null)
-        {
+    public Node CreateNode(int x, int y, Vector2 position, GameObject prefab) {
+        if (prefab != null) {
             GameObject tile = Instantiate(prefab, position, Quaternion.identity, transform);
 
             tile.name = "Đất" + "(" + x + ", " + y + ")";
             Node node = tile.GetComponent<Node>();
             node.x = x; node.y = y;
 
-             // Tính toán sortingOrder: Ưu tiên x lớn hơn và nếu x bằng nhau thì y nhỏ hơn
+            // Tính toán sortingOrder: Ưu tiên x lớn hơn và nếu x bằng nhau thì y nhỏ hơn
             Renderer renderer = tile.GetComponentInChildren<SpriteRenderer>();
-            if (renderer != null)
-            {
+            if (renderer != null) {
                 renderer.sortingOrder = -(int)(y * sortingScale) + x;
             }
             return node;
