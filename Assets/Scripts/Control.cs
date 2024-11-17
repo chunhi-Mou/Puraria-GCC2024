@@ -15,8 +15,8 @@ public class Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonUp(0)){
-            Vector2 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        Vector2 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        if (Input.GetMouseButtonUp(0)){
             if(unit==null){
                 RaycastHit2D hit = Physics2D.Raycast(pos,pos,0,LayerMask.GetMask("Unit"));
                 if(hit) unit=hit.collider.gameObject;
@@ -30,11 +30,13 @@ public class Control : MonoBehaviour
             }
             else {
                 hit = Physics2D.Raycast(pos,pos,0,LayerMask.GetMask("Default"));
+                Debug.Log(hit);
                 if(hit){
                     unit.GetComponent<PlayerController>().path = new List<Vector2>();
                     unit.GetComponent<PlayerController>().currNode=0;
                     unit.GetComponent<PlayerController>().delay=0.5f;
                     unit.GetComponent<PlayerController>().path = GetComponent<PathfindingAStar>().resultPath(unit.transform.position,hit.collider.gameObject.transform.position,3);
+                    Debug.Log("Toi o day");
                 }
             }
         }

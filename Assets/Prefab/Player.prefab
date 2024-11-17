@@ -44,11 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf8a89e47a54a846b703dc4d42be597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultPath: []
-  player: {fileID: 0}
-  target: {fileID: 0}
-  currentNode: {fileID: 0}
-  timeFind: 0
+  grid: {fileID: 0}
 --- !u!1 &4723194546120691706
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +55,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1841669299599551718}
   - component: {fileID: 5489912681457465820}
-  - component: {fileID: 6101532854419018018}
   - component: {fileID: 5830892076133818232}
   m_Layer: 0
   m_Name: Visual
@@ -135,19 +130,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6101532854419018018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4723194546120691706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d3a0e90f2850d3498734a0df7503490, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 2
 --- !u!95 &5830892076133818232
 Animator:
   serializedVersion: 5
@@ -216,7 +198,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf92ecd5be61e1469d1a353a6046497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSoil: {fileID: 0}
+  path: []
+  currNode: 0
+  delay: 0.5
 --- !u!50 &5737961875702397249
 Rigidbody2D:
   serializedVersion: 4

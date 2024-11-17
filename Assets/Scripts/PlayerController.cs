@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 
     void Update(){
         if(path.Count>0){
+            Debug.Log("Found Path");
             if(delay>=0.5f){
                 RaycastHit2D hit = Physics2D.Raycast(path[currNode],path[currNode],0,LayerMask.GetMask("Default"));
                 if(hit) MoveTo(hit.collider.gameObject);

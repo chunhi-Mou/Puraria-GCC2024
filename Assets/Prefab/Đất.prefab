@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3643640053817082140}
   - component: {fileID: 780468180997649234}
-  - component: {fileID: 8676648239528958302}
   - component: {fileID: 3730485087433394854}
   m_Layer: 0
   m_Name: "\u0110\u1EA5t"
@@ -48,24 +47,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isObstacle: 0
+  soilType: 0
   gCost: 0
   hCost: 0
+  FCost: 0
+  pos: {x: 0, y: 0}
   prevNode: {fileID: 0}
   neighbors: []
   x: 0
   y: 0
---- !u!114 &8676648239528958302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148110595552829741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 443852facd2e2214297bc7106a658761, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!60 &3730485087433394854
 PolygonCollider2D:
   m_ObjectHideFlags: 0
