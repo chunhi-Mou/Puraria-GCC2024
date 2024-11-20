@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(GridMapView))]
 public class GridMapController : MonoBehaviour {
     #region Singleton
     public static GridMapController Instance;
