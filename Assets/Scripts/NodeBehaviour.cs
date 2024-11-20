@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Node))]
 [RequireComponent(typeof(PolygonCollider2D))]
-public class SoilBehaviour : MonoBehaviour
+public class NodeBehaviour : MonoBehaviour
 {
     private void OnMouseDown() {
             if (!PlayerView.isMoving && !EventSystem.current.IsPointerOverGameObject())
